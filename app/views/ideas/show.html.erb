@@ -4,6 +4,8 @@
 <p><%= @idea.body %></p>
 
 <p>Created <%= time_ago_in_words(@idea.created_at) %> ago </p>
+ 
+ <p><%= @idea.likes.count %> <%= (@idea.likes.count) == 1 ? 'Like' : 'Likes'%></p>
 
 <% if can? :crud, @idea %>
   <%= button_to "Edit", edit_idea_path(@idea), method: :get%>
