@@ -9,6 +9,4 @@ class Like < ApplicationRecord
         message: "Has already been liked"
     }
   )
-
-
 end

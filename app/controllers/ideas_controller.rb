@@ -24,8 +24,8 @@ class IdeasController < ApplicationController
                 render 'new'
             end
         else
-        flash[:error] = "Something went wrong"
-        render 'new'
+        flash[:alert] = "Please Add Title and Body"
+            redirect_to new_idea_path(@idea)
         end
     end
 

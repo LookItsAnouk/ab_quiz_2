@@ -10,8 +10,8 @@ class ReviewsController < ApplicationController
             flash[:success] = "Review successfully created"
             redirect_to idea_path(@idea)
         else
-            @review = @idea.comments.order(created_at: :desc)
-            render '/ideas/show'
+            flash[:alert] = "Please Add Text"
+            redirect_to idea_path(@idea)
         end
     end
 
@@ -22,9 +22,9 @@ class ReviewsController < ApplicationController
             redirect_to idea_path(@idea)
             flash[:success] = "Review deleted"
         elsif can?(:crud, @idea)
-        @review.destroy
-        redirect_to idea_path(@idea)
-        flash[:success] = "Review deleted"
+            @review.destroy
+            redirect_to idea_path(@idea)
+            flash[:success] = "Review deleted"
         else   
             redirect_to idea_path, alert: "Not athorized to change Review!"
         end
