@@ -1,6 +1,11 @@
     <nav class="navbar navbar-expand-med navbar-light bg-light">
-    <a class="navbar-brand" href="./"> Blog On Rails
+    <a class="navbar-brand" href="./" style ="margin-left: 5px"> Idea Factory
     </a>
+    <p> <% flash.each do |type, message| %>
+                <div class="alert alert-info" role=alert >
+                <%= type + "--" + message %>
+                </div>
+            <% end %> <p>
 
   <div class=" navbar navbar-expand ">
     <ul class="navbar-nav mr-auto">
@@ -12,22 +17,21 @@
                  <li class="nav-item active">
                     <a class="nav-link" href="/ideas/new" style="color: black ;">New Idea</a>
                 </li>
-        <li class="nav-item active">
-              <% if user_signed_in? %>
-                Hello <%=current_user.first_name%> 
-                <%= button_to "Logout", session_path, method: :delete,
-                data: {confirm: "are you sure you want to log out?"}%>
-             <% else %>
-                <%= link_to "Login", new_session_path %> |
-                <%= link_to "Sign Up", new_user_path %>
-             <% end %>
-        <hr>
-            <% flash.each do |type, message| %>
-                <div class="alert alert-info" role=alert >
-                <%= type + "-------" + message %>
-                </div>
-            <% end %>
-        </li>
-    </ul>
+                <% if user_signed_in? %>
+                    <span class="navbar-text" style ="margin-right: 5px">
+                    Hello <%=current_user.first_name %> 
+                    </span>
+                    <span class="navbar-text" >
+                    <%= button_to "Logout", session_path, method: :delete,
+                    data: {confirm: "are you sure you want to log out?"}%>
+                    </span>
+                <% else %>
+                    <li class="navbar-text">
+                       <%= button_to "Login", new_session_path, method: :get %>
+                    </li>
+                    <li class="navbar-text" style ="margin-left: 5px">
+                        <%= button_to "Sign Up", new_user_path, method: :get  %>
+                    </li>
+                <% end %>
   </div>
 </nav>

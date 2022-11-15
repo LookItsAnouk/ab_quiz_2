@@ -15,12 +15,17 @@ class IdeasController < ApplicationController
     def create
         @idea = Idea.new(idea_params)
         @idea.user = current_user
-        if @idea.save
-            flash[:success] = "Idea successfully created"
-            redirect_to @idea
+        if @idea.is_valid?
+            if @idea.save 
+                flash[:success] = "Idea successfully created"
+                redirect_to @idea
+            else
+                flash[:error] = "Something went wrong"
+                render 'new'
+            end
         else
-            flash[:error] = "Something went wrong"
-            render 'new'
+        flash[:error] = "Something went wrong"
+        render 'new'
         end
     end
 
@@ -61,4 +66,5 @@ class IdeasController < ApplicationController
         redirect_to root_path, alert: "Not authorized!" unless can?(:crud, @idea)
     end  
 
+    
 end
