@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root "ideas#index"
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :ideas do 
+    resources :reviews, only: [:create, :destroy]
+    resources :likes, only: [:create, :destroy]
+  end
+
+  resources :users, only: [:new, :create]
+
+  resource :session, only: [:new, :destroy, :create]
+
 end

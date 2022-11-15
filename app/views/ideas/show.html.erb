@@ -1,0 +1,32 @@
+<%= render "navBar" %>
+<h1><%= @idea.title %></h1>
+
+<p><%= @idea.body %></p>
+
+<p>Created <%= time_ago_in_words(@idea.created_at) %> ago </p>
+ 
+ <p><%= @idea.likes.count %> <%= (@idea.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+
+<% if can? :crud, @idea %>
+  <%= button_to "Edit", edit_idea_path(@idea), method: :get%>
+  <%= button_to "Delete", idea_path(@idea.id), method: :delete, data: {confirm: "Are you sure"} %></p>
+<% end %>
+
+<% @idea.reviews.each do |review| %>
+    <%= review.body %>
+    <p>Created <%= time_ago_in_words(review.created_at) %> ago 
+    <% if can? :crud, review %>
+      <%= link_to 'Delete',  idea_review_path(@idea.id, review.id), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+    <% end %>
+    </p>
+    <hr>
+<% end %>
+ 
+<%= @review.errors.full_messages.join(', ') %>
+<% if user_signed_in? %>
+  <%= form_for [@idea, @review] do |f| %>
+      <%= f.text_area :body %>
+      <br>
+      <%= f.submit %>
+  <% end %>
+<% end %>

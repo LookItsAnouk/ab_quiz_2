@@ -1,0 +1,25 @@
+<%= render "navBar" %>
+
+<div class="card-columns" >
+  <% @ideas.each do |idea| %>
+    <div class="card" style="background-color: #ffffe6">
+      <div class="card-body">
+        <h5 class="card-title"><%= link_to idea.title, idea %></h5>
+        <p class="card-text"><%= idea.body %></p>
+        <p class="card-text">
+        Created By: <%= idea.user.first_name %> </p>
+        <p><%= idea.likes.count %> <%= (idea.likes.count) == 1 ? 'Like' : 'Likes'%>
+
+      <% if user_signed_in? %>
+        <% pre_like = idea.likes.find { |like| like.user_id == current_user.id} %>
+        <% if pre_like %>
+          <%= button_to 'Liked', idea_like_path(idea, pre_like), method: :delete %>
+        <% else %>
+          <%= button_to 'Like', idea_likes_path(idea), method: :post %>
+        <% end %>
+      <% end %> 
+        </p>
+      </div>    
+    </div>  
+  <% end %>
+</div>
